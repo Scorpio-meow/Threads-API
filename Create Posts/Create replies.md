@@ -1,8 +1,8 @@
-# Create Replies
+# Create replies
 
 
 
-### Permissions
+## Permissions
 
 Creating replies requires the following permissions:
 
@@ -19,7 +19,9 @@ In addition, to reply to a thread, you must meet one of the following requiremen
 
 ## Respond to replies
 
-### Step 1: Use the `reply_to_id` parameter to reply to a specific reply under the root post.
+### Step 1: Create a reply container {#step-1-use-the-reply_to_id-parameter-to-reply-to-a-specific-reply-under-the-root-post}
+
+Use the `reply_to_id` parameter to reply to a specific reply under the root post.
 
 #### Example request
 
@@ -36,17 +38,17 @@ curl -X POST \
 
 ```json
 {
- "id": "1234567890"
+  "id": "1234567890"
 }
 ```
 
-### Step 2: Use the `POST /{threads-user-id}/threads_publish` endpoint to publish the reply container ID returned in the previous step.
+### Step 2: Publish the reply container {#step-2-use-the-post-threads-user-idthreads_publish-endpoint-to-publish-the-reply-container-id-returned-in-the-previous-step}
 
-Wait about 30 seconds before publishing to allow the Threads media pipeline to finish processing the upload. See the [media container status endpoint](https://developers.facebook.com/documentation/threads/troubleshooting#publishing-does-not-return-a-media-id) for more details.
+Use the `POST /{threads-user-id}/threads_publish` endpoint to publish the reply container ID returned in the previous step. Wait about 30 seconds before publishing to allow the Threads media pipeline to finish processing the upload. See the [media container status endpoint](https://developers.facebook.com/documentation/threads/troubleshooting#publishing-does-not-return-a-media-id) for more details.
 
 #### Parameters
 
-* `creation_id` —  Identifier of the Threads media container created from the `/threads` endpoint.
+* `creation_id` — Identifier of the Threads media container created from the `/threads` endpoint.
 
 #### Example request
 

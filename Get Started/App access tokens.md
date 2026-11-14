@@ -1,4 +1,4 @@
-# App Access Tokens
+# App access tokens
 
 
 
@@ -14,17 +14,14 @@ To generate an app access token, you need:
 ### Example request
 
 ```bash
-curl -X GET https://graph.threads.com/oauth/access_token
-  ?client_id=<APP_ID>
-  &client_secret=<APP_SECRET>
-  &grant_type=client_credentials
+curl -X GET "https://graph.threads.com/oauth/access_token?client_id=<THREADS_APP_ID>&client_secret=<THREADS_APP_SECRET>&grant_type=client_credentials"
 ```
 
 ### Example response
 
 ```json
 {
-  "access_token": "TH|<APP_ID>|<APP_SECRET>",
+  "access_token": "TH|<THREADS_APP_ID>|<THREADS_APP_SECRET>",
   "token_type": "bearer"
 }
 ```
@@ -40,8 +37,7 @@ Another method to call the Threads API on behalf of an app does not require a ge
 ### Example request
 
 ```bash
-curl -X GET https://graph.threads.com/<API_ENDPOINT>
-  ?access_tokens=TH|<APP_ID>|<APP_SECRET>&...
+curl -X GET "https://graph.threads.com/<API_ENDPOINT>?access_token=TH|<THREADS_APP_ID>|<THREADS_APP_SECRET>&..."
 ```
 
 The choice to use a generated access token or this method depends on where you hide your app secret.

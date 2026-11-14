@@ -199,7 +199,7 @@ See [Location Tagging](https://developers.facebook.com/documentation/threads/cre
 
 ## October 11, 2024
 
-* A hash sign followed by a whole number (i.e. #1) will not be converted into a tag.
+* A hash sign followed by a whole number (for example, #1) will not be converted into a tag.
 * The list of unsupported special characters in tags has been updated.
 * See [Tags](https://developers.facebook.com/documentation/threads/posts#tags) for more details.
 
@@ -252,7 +252,7 @@ See [Location Tagging](https://developers.facebook.com/documentation/threads/cre
 ## June 18, 2024
 
 * Threads API is open to all developers, see [blog post](https://developers.facebook.com/blog/post/2024/06/18/the-threads-api-is-finally-here/) for more details.
-* Docs have been updated to clarify that the `since` and `until` parameters are not supported when fetching the `followers_count` metric on the `/{threads-user-id}/threads_insights` endpoint.
+* The documentation has been updated to clarify that the `since` and `until` parameters are not supported when fetching the `followers_count` metric on the `/{threads-user-id}/threads_insights` endpoint.
 
 ## June 17, 2024
 
@@ -265,13 +265,13 @@ See [Location Tagging](https://developers.facebook.com/documentation/threads/cre
 
 ## June 7, 2024
 
-- The domain for API calls is now `graph.threads.net`. All API calls to `graph.threads.net` should use `v1.0`. In order to use `graph.threads.net`, you will need to obtain a Threads access token.
+- The domain for API calls is now `graph.threads.net`. All API calls to `graph.threads.net` should use `v1.0`. To use `graph.threads.net`, you will need to obtain a Threads access token.
 - Reply Management and Insights have been added to the [Reference](https://developers.facebook.com/documentation/threads/reference) page.
 
 ## May 21, 2024
 
 - The `since` and `until` parameters on the user insights endpoint do not work for dates before April 13, 2024 (Unix timestamp 1712991600).
-- A Threads profile must have at least 100 followers in order to fetch values for the `follower_demographics` metric.
+- A Threads profile must have at least 100 followers to fetch values for the `follower_demographics` metric.
 - When requesting follower demographics, the `breakdown` parameter must be provided and must be set equal to one of the following values: `country`, `city`, `age`, or `gender`.
 - Updated the possible values of the `hide_status` field on replies: `NOT_HUSHED`, `UNHUSHED`, `HIDDEN`, `COVERED`, `BLOCKED`, `RESTRICTED`.
 

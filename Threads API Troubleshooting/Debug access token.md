@@ -1,4 +1,4 @@
-# Debug Access Token
+# Debug access token
 
 
 
@@ -6,9 +6,9 @@ The `/debug_token` endpoint returns metadata about a given access token. This in
 
 To call this endpoint, provide either an [app access token](https://developers.facebook.com/documentation/threads/get-started/app-access-tokens) or a user access token from a [Threads tester](https://developers.facebook.com/documentation/threads/get-started#threads-testers) as the `access_token` parameter. In either case, the access token must be associated with the same app that is linked to the `input_token` being inspected. An app can only inspect tokens that belong to itself.
 
-## Retrieve an Access Token's Data
+## Retrieve an access token's data
 
-### Example Request
+### Example request
 
 ```bash
 curl -i -X GET \
@@ -19,16 +19,16 @@ curl -i -X GET \
 
 | Name | Description |
 | --- | --- |
-| `access_token`<br><br>string | **Required.**<br>An [app access token](https://developers.facebook.com/documentation/threads/get-started/app-access-tokens), or a Threads Graph API user access token of a Threads tester. |
-| `input_token`<br><br>string | **Required.**<br>The access token to be inspected (does not need to be a Threads tester but must be associated with the same app as the `access_token` parameter). |
+| `access_token`<br><br>string | **Required.**  <br>An [app access token](https://developers.facebook.com/documentation/threads/get-started/app-access-tokens), or a Threads API user access token of a Threads tester. |
+| `input_token`<br><br>string | **Required.**  <br>The access token to be inspected (does not need to be a Threads tester but must be associated with the same app as the `access_token` parameter). |
 
 **Note:** The `access_token` and `input_token` can be associated with different users but must be associated with the same app. If the `input_token` was issued by a different app, the call fails with the following error message: `The App_id in the input_token did not match the Viewing App`.
 
-### Threads App Access Token Format
+### Threads app access token format
 
-A Threads app access token follows the following format: `TH|<APP_ID>|<APP_SECRET>`. See [App Access Tokens](https://developers.facebook.com/documentation/threads/get-started/app-access-tokens) for details on how to generate one.
+A Threads app access token follows the following format: `TH|<THREADS_APP_ID>|<THREADS_APP_SECRET>`. See [App access tokens](https://developers.facebook.com/documentation/threads/get-started/app-access-tokens) for details on how to generate one.
 
-### Example Response
+### Example response
 
 ```json
 {
@@ -63,7 +63,7 @@ A Threads app access token follows the following format: `TH|<APP_ID>|<APP_SECRE
 | `application`<br><br>string | Name of the application this access token is for. |
 | `data_access_expires_at`<br><br>Unixtime | Timestamp when the app's access to user data expires. |
 | `expires_at`<br><br>Unixtime | Timestamp when this access token expires. |
-| `is_valid`<br><br>Boolean | Whether the access token is still valid or not. |
+| `is_valid`<br><br>Boolean | Whether the access token is still valid. |
 | `issued_at`<br><br>Unixtime | Timestamp when this access token was issued. |
-| `scopes`<br><br>string[] | List of permissions that the user has granted for the app in this access token. |
-| `user_id`<br><br>string | The ID of the user this access token is for. |
+| `scopes`<br><br>list of strings | List of permissions that the user has granted for the app in this access token. |
+| `user_id`<br><br>numeric string | The ID of the user this access token is for. |

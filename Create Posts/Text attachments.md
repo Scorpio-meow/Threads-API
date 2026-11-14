@@ -1,4 +1,4 @@
-# Text Attachments
+# Text attachments
 
 
 
@@ -20,7 +20,7 @@ If your app has not been approved for advanced access for the `threads_content_p
 * If there is already a [link attachment](https://developers.facebook.com/documentation/threads/posts#links) in the main post, a link attachment cannot be added in the text attachment.
 * The number of links is restricted to 5 or fewer.
 
-**Warning:** Starting December 22, 2025, Threads posts containing more than 5 links will fail to post during the media creation step (`POST /{threads-user-id}/threads`) with the error code: `THREADS_API__LINK_LIMIT_EXCEEDED`.
+**Warning:** Since December 22, 2025, Threads posts containing more than 5 links fail to post during the media creation step (`POST /{threads-user-id}/threads`) with the error code: `THREADS_API__LINK_LIMIT_EXCEEDED`.
 
 How links are counted:
 
@@ -34,7 +34,7 @@ Examples:
 * If the `text` field contains www.instagram.com and www.threads.com, and the `link_attachment_url` is www.facebook.com, this counts as 3 links.
 * If the `text` field contains www.example.com, www.example.com, and www.test.com, and the `link_attachment_url` is www.test.com, this counts as 2 links (www.example.com and www.test.com are each counted once).
 
-If you receive this error, reduce the number of unique links in your post to 5 or less.
+If you receive this error, reduce the number of unique links in your post to 5 or fewer.
 
 ## Create a post with a text attachment
 
@@ -47,17 +47,17 @@ You can add a text attachment to a post by making a request to the `POST /{threa
 | Name | Description |
 | --- | --- |
 | `plaintext`<br><br>string | **Required.**  <br>The text of the text attachment with a maximum of 10,000 characters. |
-| `link_attachment_url`<br><br>URL | **Optional.**  <br>The URL of a link to include in the text attachment. |
-| `text_with_styling_info`<br><br>string | **Optional.**  <br>The styling info be applied to the text and where it should appear.<br><br>**Values:** `offset`, `length`, `styling_info`<br><br>**Note:** The text styling info ranges within the `text_with_styling_info` field should not overlap.<br><br>Available text styles:<br><br>* Bold<br>* Italic<br>* Highlight<br>* Underline<br>* Strikethrough |
+| `link_attachment_url`<br><br>URL string | **Optional.**  <br>The URL of a link to include in the text attachment. |
+| `text_with_styling_info`<br><br>string | **Optional.**  <br>The styling information to apply to the text and where it should appear.<br><br>**Values:** `offset`, `length`, `styling_info`<br><br>**Note:** The text styling ranges within the `text_with_styling_info` field should not overlap.<br><br>Available text styles:<br><br>* Bold<br>* Italic<br>* Highlight<br>* Underline<br>* Strikethrough |
 
 #### Example request
 
-```html
+```bash
 curl -i -X POST \
   -d "media_type=TEXT" \
-  -d "text=<TEXT>" \
+  --data-urlencode "text=<TEXT>" \
   -d "access_token=<ACCESS_TOKEN>" \
-  -d "text_attachment=
+  --data-urlencode 'text_attachment=
     {
       "plaintext": "Lengthy plain text for the text attachment.",
       "link_attachment_url": "<LINK_URL>",
@@ -72,7 +72,7 @@ curl -i -X POST \
           "length": 10,
           "styling_info":["highlight"]
         }]
-    }" \
+    }' \
 "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads"
 ```
 
@@ -86,7 +86,7 @@ curl -i -X POST \
 
 ### Step 2: Publish the media container
 
-You can [publish](https://developers.facebook.com/documentation/threads/posts#step-2--publish-a-threads-media-container) using the returned Threads media container ID to create your Threads post with a text attachment.
+You can [publish](https://developers.facebook.com/documentation/threads/posts#step-2-publish-the-threads-media-container) using the returned Threads media container ID to create your Threads post with a text attachment.
 
 ## Retrieve posts with text attachments
 
@@ -100,11 +100,11 @@ Make a request to the `GET /{threads-user-id}/threads` or `GET /{threads-media-i
 
 ### Example request
 
-```html
-curl -i -X GET \
+```bash
+curl -i -G \
   -d "access_token=<ACCESS_TOKEN>" \
   -d "fields=id,text_attachment" \
-"https://graph.threads.com/v1.0/<THREADS_MEDIA_ID>
+"https://graph.threads.com/v1.0/<THREADS_MEDIA_ID>"
 ```
 
 ### Example response
@@ -119,13 +119,19 @@ curl -i -X GET \
       {
         "offset": 0,
         "length": 7,
-        "styling_info":["bold","italic"]
+        "styling_info": [
+          "bold",
+          "italic"
+        ]
       },
       {
         "offset": 7,
         "length": 10,
-        "styling_info":["highlight"]
-      }]
+        "styling_info": [
+          "highlight"
+        ]
+      }
+    ]
   }
 }
 ```
@@ -133,4 +139,4 @@ curl -i -X GET \
 ## Learn more
 
 * [Posts](https://developers.facebook.com/documentation/threads/posts)
-* [Retrieve User Posts](https://developers.facebook.com/documentation/threads/retrieve-and-discover-posts/retrieve-posts)
+* [Retrieve user posts](https://developers.facebook.com/documentation/threads/retrieve-and-discover-posts/retrieve-posts)

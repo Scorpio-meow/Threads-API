@@ -1,4 +1,4 @@
-# Threads Profiles
+# Threads profiles
 
 
 
@@ -10,13 +10,13 @@ Use the `GET /{threads-user-id}?fields=id,username,...` endpoint to return profi
 
 ### Permissions
 
-The Threads Profile API requires an appropriate access token and permissions based on the node you are targeting. While you are testing, you can generate tokens and grant your app permissions by using the Graph API Explorer.
+Retrieving an app-scoped user's profile information requires an appropriate access token and permissions based on the endpoint you are calling. While you are testing, you can generate tokens and grant your app permissions by using the Graph API Explorer.
 
 * `threads_basic` — Required for making any calls to all Threads API endpoints.
 
 ### Limitations
 
-* You may only fetch the profile of the app-scoped user.
+* You can only fetch the profile of the app-scoped user.
 
 ### Fields
 
@@ -27,11 +27,11 @@ The Threads Profile API requires an appropriate access token and permissions bas
 | `name` | Display name of the user on Threads. |
 | `threads_profile_picture_url` | URL of the user's profile picture on Threads. |
 | `threads_biography` | Biography text on Threads profile. |
-| `is_verified` | Returns `true` if the user is verified on Threads. |
+| `is_verified` | Whether the user is verified on Threads. |
 
 ### Example request
 
-```html
+```bash
 curl -s -X GET \
 "https://graph.threads.com/v1.0/me?fields=id,username,name,threads_profile_picture_url,threads_biography,is_verified&access_token=<ACCESS_TOKEN>"
 ```
@@ -55,7 +55,7 @@ Use the `GET /profile_lookup?username=...` endpoint to look up a public profile 
 
 ### Permissions
 
-The Threads Profile Discovery API requires an appropriate access token and permissions based on the node you are targeting. While you are testing, you can generate tokens and grant your app permissions by using the Graph API Explorer.
+The Threads Profile Discovery API requires an appropriate access token and permissions based on the endpoint you are calling. While you are testing, you can generate tokens and grant your app permissions by using the Graph API Explorer.
 
 * `threads_basic` — Required for making any calls to all Threads API endpoints.
 * `threads_profile_discovery` — Required for making any calls to all Threads Profile Discovery API endpoints.
@@ -65,13 +65,13 @@ With [standard access](https://developers.facebook.com/documentation/development
 ### Limitations
 
 * Only returns public profiles with at least 100 followers.
-* A user can send a maximum of 1,000 requests within a rolling 24-hour period. Once a query is sent, it will count against this limit for 24 hours.
+* A user can send a maximum of 1,000 requests within a rolling 24-hour period. Once a query is sent, it counts against this limit for 24 hours.
 
 ### Parameters
 
 | Name | Description |
 | --- | --- |
-| `access_token`<br><br>string | **Required.**  <br>Threads Graph API user access token. |
+| `access_token`<br><br>string | **Required.**  <br>Threads API user access token. |
 | `username`<br><br>string | **Required.**  <br>Handle or unique username on Threads. Must be an exact match. |
 
 ### Fields
@@ -80,18 +80,18 @@ With [standard access](https://developers.facebook.com/documentation/development
 | --- | --- |
 | `username`<br><br>string | Handle or unique username on Threads. |
 | `name`<br><br>string | Display name of the user on Threads. |
-| `profile_picture_url`<br><br>string | URL of the user's profile picture on Threads. |
+| `profile_picture_url`<br><br>URL string | URL of the user's profile picture on Threads. |
 | `biography`<br><br>string | Biography text on Threads profile. |
 | `follower_count`<br><br>int | Total follower count of the user. |
 | `likes_count`<br><br>int | Likes count of the user's posts in the past 7 days. |
 | `quotes_count`<br><br>int | Quotes count of the user's posts in the past 7 days. |
 | `reposts_count`<br><br>int | Reposts count of the user's posts in the past 7 days. |
 | `views_count`<br><br>int | Views count of the user's posts in the past 7 days. |
-| `is_verified`<br><br>Boolean | Returns `true` if the user is verified on Threads. |
+| `is_verified`<br><br>Boolean | Whether the user is verified on Threads. |
 
 ### Example request
 
-```html
+```bash
 curl -i -X GET \
   "https://graph.threads.com/v1.0/profile_lookup?access_token=<ACCESS_TOKEN>&username=<THREADS_USERNAME>"
 ```

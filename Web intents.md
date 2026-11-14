@@ -1,22 +1,22 @@
-# Web Intents
+# Web intents
 
 
 
 Web intents offer a simple way for people to interact with Threads directly from your website, starting with the ability to quickly create posts and follow profiles.
 
-When clicking on a Web intent URL, a new window opens and users are directed to Threads to complete the intended action. On mobile (iOS and Android), web intents will open the Threads app whenever it is installed. If they are not already logged-in, they will have the opportunity to sign in or create a Threads account.
+When users click a web intent URL, a new window opens and directs them to Threads to complete the intended action. On mobile (iOS and Android), web intents open the Threads app whenever it is installed. If users are not already logged in, they can sign in or create a Threads account.
 
-When linking intents to an image, we recommend using the Threads logo available in our [Threads Brand Resources](https://about.meta.com/brand/resources/instagram/threads/).
+When linking intents to an image, we recommend using the Threads logo available in the [Threads Brand Resources](https://about.meta.com/brand/resources/instagram/threads/).
 
-## Post Intent
+## Post intent
 
-Post intents allow people to easily share their favorite content from your website directly to Threads, in order to increase your reach, spark conversations and drive traffic.
+Post intents allow people to share their favorite content from your website directly to Threads. This helps increase your reach, spark conversations, and drive traffic.
 
-### URL Format
+### URL format
 
 The URL format is [https://www.threads.com/intent/post](https://www.threads.com/intent/post).
 
-### Supported Parameters
+### Supported parameters
 
 The post intent flow supports the following query string parameters.
 
@@ -26,10 +26,10 @@ The post intent flow supports the following query string parameters.
 | `url` | **Optional.**  <br>The URL for an optional link attachment. |
 | `tag` | **Optional.**  <br>The topic tag that the post dialog should be prefilled with.<br><br>**Note:** Newlines, tabs, periods (.), and ampersands (&) are not allowed in topic tags. The maximum length of a valid topic tag is 50 characters. |
 | `reply_control` | **Optional.**  <br>The initial audience that is allowed to reply to a post.<br><br>**Values:** `everyone`, `accounts_you_follow`, `mentioned_only`, `followers_only` |
-| `reply_post_shortcode` | **Optional.**  <br>The shortcode of the parent post that you are replying to. When this parameter is included, it will open the Threads post composer in reply mode with the parent post visible. |
-| `quote_post_shortcode` | **Optional.**  <br>The shortcode of the post that is being quoted. When this parameter is included, it will open the Threads post composer with the quoted post attached. |
+| `reply_post_shortcode` | **Optional.**  <br>The shortcode of the parent post that you are replying to. When this parameter is included, the Threads post composer opens in reply mode with the parent post visible. |
+| `quote_post_shortcode` | **Optional.**  <br>The shortcode of the post that is being quoted. When this parameter is included, the Threads post composer opens with the quoted post attached. |
 
-All parameter values should be encoded using [percent-encoding](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1) ("URL encoding") so that the values can safely be passed via the URL.
+All parameter values should be encoded using [percent-encoding](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1) ("URL encoding") so that the values can safely be passed in the URL.
 
 ### Examples
 
@@ -45,15 +45,15 @@ All parameter values should be encoded using [percent-encoding](https://datatrac
 | Quote post and text | [https://www.threads.com/intent/post?quote_post_shortcode=DPgzLZcAJPr&text=Threads%3A%20A%20New%20Way%20to%20Share%20With%20Text](https://www.threads.com/intent/post?quote_post_shortcode=DPgzLZcAJPr&text=Threads%3A%20A%20New%20Way%20to%20Share%20With%20Text) |
 | Reply post, quote post, and text | [https://www.threads.com/intent/post?reply_post_shortcode=DRM8DF9AGUc&quote_post_shortcode=DPgzLZcAJPr&text=Threads%3A%20A%20New%20Way%20to%20Share%20With%20Text](https://www.threads.com/intent/post?reply_post_shortcode=DRM8DF9AGUc&quote_post_shortcode=DPgzLZcAJPr&text=Threads%3A%20A%20New%20Way%20to%20Share%20With%20Text) |
 
-## Follow Intent
+## Follow intent
 
-Follow intents allow people to easily follow a Threads account directly from your website.
+Follow intents allow people to follow a Threads account directly from your website.
 
-### URL Format
+### URL format
 
 The URL format is [https://www.threads.com/intent/follow](https://www.threads.com/intent/follow).
 
-### Supported Parameters
+### Supported parameters
 
 | Name | Description |
 | --- | --- |

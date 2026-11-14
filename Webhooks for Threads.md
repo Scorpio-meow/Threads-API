@@ -10,11 +10,11 @@ To receive live webhook notifications, the following conditions must be satisfie
 
 - Your app must have Threads webhooks added as a sub-use case and appropriate fields subscribed to in the App Dashboard.
 
-- For non-tech providers, the apps must be in [Live Mode](https://developers.facebook.com/documentation/development/build-and-test/app-modes).
+- For non-tech providers, the apps must be in [Live mode](https://developers.facebook.com/documentation/development/build-and-test/app-modes).
 
-- For tech providers, the apps must have permissions with an [Advanced Access level](https://developers.facebook.com/documentation/development/graph-api/overview/access-levels). You can request Advanced Access for permissions as shown here:
+- For tech providers, the apps must have permissions with an [advanced access level](https://developers.facebook.com/documentation/development/graph-api/overview/access-levels). You can request advanced access for permissions as shown here:
 
-If the app permissions don't have an access level of Advanced Access, the app won't receive webhook notifications.
+If the app permissions do not have advanced access, the app does not receive webhook notifications.
 
 - The app user must have granted your app appropriate permissions (that is, `threads_basic`, `threads_read_replies` for reply webhooks).
 
@@ -26,8 +26,8 @@ If the app permissions don't have an access level of Advanced Access, the app wo
 
 ### Limitations
 
-* Apps don't receive webhook notifications if the media where the reply or mention appears was created by a private account.
-* Your app must have successfully completed App Review ([Advanced Access](https://developers.facebook.com/documentation/development/graph-api/overview/access-levels)) to receive webhook notifications for all of the fields.
+* Apps do not receive webhook notifications if the media where the reply or mention appears was created by a private account.
+* Your app must have successfully completed App Review ([advanced access](https://developers.facebook.com/documentation/development/graph-api/overview/access-levels)) to receive webhook notifications for all of the fields.
 
 ### Step 0: [Optional] Use the sample app to test your integration
 
@@ -52,15 +52,15 @@ The token here is passed to your server defined in the callback URL to allow ver
 
 | Name | Description |
 | --- | --- |
-| `replies` | [Replies](https://developers.facebook.com/documentation/threads/retrieve-and-manage-replies/replies-and-conversations#a-threads-replies) on a [Threads Media](https://developers.facebook.com/documentation/threads/retrieve-and-discover-posts/retrieve-posts) owned by the Threads install user.  <br>**Required permission(s):** [`threads_basic`](https://developers.facebook.com/documentation/development/permissions#threads_basic), [`threads_read_replies`](https://developers.facebook.com/documentation/development/permissions#threads_read_replies) |
+| `replies` | [Replies](https://developers.facebook.com/documentation/threads/retrieve-and-manage-replies/replies-and-conversations#a-threads-replies) on a [Threads post](https://developers.facebook.com/documentation/threads/retrieve-and-discover-posts/retrieve-posts) owned by the authenticated user.  <br>**Required permission(s):** [`threads_basic`](https://developers.facebook.com/documentation/development/permissions#threads_basic), [`threads_read_replies`](https://developers.facebook.com/documentation/development/permissions#threads_read_replies) |
 | `delete` | Threads posts that were [deleted](https://developers.facebook.com/documentation/threads/posts/delete-posts) by the authenticated user.  <br>**Required permissions:** [`threads_basic`](https://developers.facebook.com/documentation/development/permissions#threads_basic), [`threads_delete`](https://developers.facebook.com/documentation/development/permissions#threads_delete) |
 
 ##### Interaction topic fields
 
 | Name | Description |
 | --- | --- |
-| `mentions` | [Mentions](https://developers.facebook.com/documentation/threads/threads-mentions) on a public [Threads Media](https://developers.facebook.com/documentation/threads/retrieve-and-discover-posts/retrieve-posts) tagging the Threads install user.  <br>**Required permission(s):** [`threads_basic`](https://developers.facebook.com/documentation/development/permissions#threads_basic), [`threads_manage_mentions`](https://developers.facebook.com/documentation/development/permissions#threads_manage_mentions)  <br>**Optional permission(s):** [`threads_read_replies`](https://developers.facebook.com/documentation/development/permissions#threads_read_replies) — required for the `has_replies`, `is_reply`, `replied_to`, and `root_post` fields. Without this permission, these fields will be removed from the webhook response. |
-| `publish` | Threads posts that were [published](https://developers.facebook.com/documentation/threads/posts) by the authenticated user (including replies to user's or other's posts).  <br>**Required permissions:** `threads_basic` |
+| `mentions` | [Mentions](https://developers.facebook.com/documentation/threads/threads-mentions) on a public [Threads post](https://developers.facebook.com/documentation/threads/retrieve-and-discover-posts/retrieve-posts) tagging the authenticated user.  <br>**Required permission(s):** [`threads_basic`](https://developers.facebook.com/documentation/development/permissions#threads_basic), [`threads_manage_mentions`](https://developers.facebook.com/documentation/development/permissions#threads_manage_mentions)  <br>**Optional permission(s):** [`threads_read_replies`](https://developers.facebook.com/documentation/development/permissions#threads_read_replies) — required for the `has_replies`, `is_reply`, `replied_to`, and `root_post` fields. Without this permission, these fields are removed from the webhook response. |
+| `publish` | Threads posts that were [published](https://developers.facebook.com/documentation/threads/posts) by the authenticated user (including replies to the user's or others' posts).  <br>**Required permissions:** `threads_basic` |
 
 ## Notification formats
 
@@ -68,9 +68,9 @@ The token here is passed to your server defined in the callback URL to allow ver
 
 | Name | Description |
 | --- | --- |
-| `app_id` | The Threads App ID displayed in **App Dashboard** > **App settings** > **Basic** > **Threads App ID**. |
-| `topic` | Name of the Webhook topic.  <br>Threads supports moderate and interaction topics. |
-| `target_id` | The media's ID for a `reply` or `delete` webhook, or the mentioned Threads user app-scoped user ID for a `mentions` webhook. |
+| `app_id` | The Threads app ID displayed in **App Dashboard** > **App settings** > **Basic** > **Threads App ID**. |
+| `topic` | Name of the webhook topic.  <br>Threads supports moderate and interaction topics. |
+| `target_id` | The media's ID for a `replies` or `delete` webhook, or the mentioned Threads user's app-scoped user ID for a `mentions` webhook. |
 | `time` | Time when the real-time notification is sent. |
 | `subscription_id` | The subscription ID for the user in the webhook. |
 | `id` | The media's ID. |
@@ -81,36 +81,36 @@ The token here is passed to your server defined in the callback URL to allow ver
 
 If you subscribe to the `replies` field, your endpoint receives a webhook notification containing the reply object.
 
-#### Sample replies payload
+#### Example replies payload {#sample-replies-payload}
 
 ```json
 {
-    "app_id": "123456",
-    "topic": "moderate",
-    "target_id": "78901",
-    "time": 1723226877,
-    "subscription_id": "234567",
-    "has_uid_field": false,
-    "values": {
-        "value": {
-            "id": "8901234",
-            "username": "test_username",
-            "text": "Reply",
-            "media_type": "TEXT_POST",
-            "permalink": "https:\/\/www.threads.com\/@test_username\/post\/Pp",
-            "replied_to": {
-                "id": "567890"
-            },
-           "root_post": {
-               "id": "123456",
-               "owner_id": "123456",
-               "username": "test_username_2"
-           },
-            "shortcode": "Pp",
-            "timestamp": "2024-08-07T10:33:16+0000"
-        },
-        "field": "replies"
-    }
+  "app_id": "123456",
+  "topic": "moderate",
+  "target_id": "78901",
+  "time": 1723226877,
+  "subscription_id": "234567",
+  "has_uid_field": false,
+  "values": {
+    "value": {
+      "id": "8901234",
+      "username": "test_username",
+      "text": "Reply",
+      "media_type": "TEXT_POST",
+      "permalink": "https:\/\/www.threads.com\/@test_username\/post\/Pp",
+      "replied_to": {
+        "id": "567890"
+      },
+      "root_post": {
+        "id": "123456",
+        "owner_id": "123456",
+        "username": "test_username_2"
+      },
+      "shortcode": "Pp",
+      "timestamp": "2024-08-07T10:33:16+0000"
+    },
+    "field": "replies"
+  }
 }
 ```
 
@@ -118,36 +118,36 @@ If you subscribe to the `replies` field, your endpoint receives a webhook notifi
 
 ### Real-time mention notifications
 
-If you subscribe to the `mentions` field, Threads sends your endpoint a webhook notification containing the media object in which the user is mentioned.
+If you subscribe to the `mentions` field, Threads will send your endpoint a webhook notification containing the media object in which the user is mentioned.
 
-#### Sample mentions payload
+#### Example mentions payload {#sample-mentions-payload}
 
 ```json
 {
-    "app_id": "123456",
-    "topic": "interaction",
-    "target_id": "78901",
-    "time": 1723226877,
-    "subscription_id": "234567",
-    "has_uid_field": false,
-    "values": {
-        "value": {
-            "id": "8901234",
-            "alt_text": "test alt text",
-            "gif_url": "https://media2.giphy.com/media/v1.Y2lkPTA1NzQyMTNjd2R0MXcybjZ6bDNyam9qaXJsN3RicnVncnFsanJ2dGk3eDJiejRmbyZlcD12MV9naWZzX2dpZklkJmN0PWc/3o85xEFRBYvAnamJnG/200.gif",
-            "has_replies": true,
-            "is_quote_post": false,
-            "is_reply": false,
-            "media_product_type": "THREADS",
-            "media_type": "TEXT_POST",
-            "permalink": "https:\/\/www.threads.com\/@test_username\/post\/Pp",
-            "shortcode": "Pp",
-            "text": "Reply",
-            "timestamp": "2024-08-07T10:33:16+0000"
-            "username": "test_username",
-        },
-        "field": "mentions"
-    }
+  "app_id": "123456",
+  "topic": "interaction",
+  "target_id": "78901",
+  "time": 1723226877,
+  "subscription_id": "234567",
+  "has_uid_field": false,
+  "values": {
+    "value": {
+      "id": "8901234",
+      "alt_text": "test alt text",
+      "gif_url": "https://media2.giphy.com/media/v1.Y2lkPTA1NzQyMTNjd2R0MXcybjZ6bDNyam9qaXJsN3RicnVncnFsanJ2dGk3eDJiejRmbyZlcD12MV9naWZzX2dpZklkJmN0PWc/3o85xEFRBYvAnamJnG/200.gif",
+      "has_replies": true,
+      "is_quote_post": false,
+      "is_reply": false,
+      "media_product_type": "THREADS",
+      "media_type": "TEXT_POST",
+      "permalink": "https:\/\/www.threads.com\/@test_username\/post\/Pp",
+      "shortcode": "Pp",
+      "text": "Reply",
+      "timestamp": "2024-08-07T10:33:16+0000",
+      "username": "test_username"
+    },
+    "field": "mentions"
+  }
 }
 ```
 
@@ -155,56 +155,56 @@ If you subscribe to the `mentions` field, Threads sends your endpoint a webhook 
 
 ### Real-time delete notifications
 
-If you subscribe to the `delete` field, Threads sends your endpoint a webhook notification containing the media object when it's deleted.
+If you subscribe to the `delete` field, Threads will send your endpoint a webhook notification containing the media object when it is deleted.
 
-#### Sample delete payload
+#### Example delete payload {#sample-delete-payload}
 
 ```json
 {
-    "app_id": "123456",
-    "topic": "moderate",
-    "target_id": "78901",
-    "time": 1723226877,
-    "subscription_id": "234567",
-    "has_uid_field": false,
-    "values": {
-        "value": {
-            "id": "8901234",
-            "owner": {
-               "owner_id": "78901",
-            },
-            "deleted_at": "2024-08-07T10:33:16+0000"
-            "timestamp": "2024-08-07T10:33:16+0000"
-            "username": "test_username",
-        },
-        "field": "delete"
-    }
+  "app_id": "123456",
+  "topic": "moderate",
+  "target_id": "78901",
+  "time": 1723226877,
+  "subscription_id": "234567",
+  "has_uid_field": false,
+  "values": {
+    "value": {
+      "id": "8901234",
+      "owner": {
+        "owner_id": "78901"
+      },
+      "deleted_at": "2024-08-07T10:33:16+0000",
+      "timestamp": "2024-08-07T10:33:16+0000",
+      "username": "test_username"
+    },
+    "field": "delete"
+  }
 }
 ```
 
 ### Real-time publish notifications
 
-If you subscribe to the `publish` field, Threads sends your endpoint a webhook notification containing the media object when it's published (including replies to user's or other's posts).
+If you subscribe to the `publish` field, Threads will send your endpoint a webhook notification containing the media object when it is published (including replies to the user's or others' posts).
 
-#### Sample publish payload
+#### Example publish payload {#sample-publish-payload}
 
 ```json
 {
-    "app_id": "123456",
-    "topic": "interaction",
-    "target_id": "78901",
-    "time": 1723226877,
-    "subscription_id": "234567",
-    "has_uid_field": false,
-    "values": {
-        "value": {
-            "id": "8901234",
-            "media_type": "TEXT_POST"
-            "permalink": "https:\/\/www.threads.com\/@test_username\/post\/Pp",
-            "timestamp": "2024-08-07T10:33:16+0000"
-            "username": "test_username",
-        },
-        "field": "publish"
-    }
+  "app_id": "123456",
+  "topic": "interaction",
+  "target_id": "78901",
+  "time": 1723226877,
+  "subscription_id": "234567",
+  "has_uid_field": false,
+  "values": {
+    "value": {
+      "id": "8901234",
+      "media_type": "TEXT_POST",
+      "permalink": "https:\/\/www.threads.com\/@test_username\/post\/Pp",
+      "timestamp": "2024-08-07T10:33:16+0000",
+      "username": "test_username"
+    },
+    "field": "publish"
+  }
 }
 ```

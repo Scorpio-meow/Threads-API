@@ -1,27 +1,29 @@
-# Reply management - Threads API
+# Threads reply management
 
 
 
-The Threads Reply Management API allows you to manage replies to users' own Threads by [hiding replies](#hide-replies), [controlling who can reply](#control-who-can-reply), and using [reply approvals](#reply-approvals).
+The Threads Reply Management API allows you to manage replies to users' own Threads posts by [hiding replies](#hide-replies), [controlling who can reply](#control-who-can-reply), and using [reply approvals](#reply-approvals).
 
 ## Hide replies
 
-Use the `/manage_reply` endpoint to hide/unhide any top-level replies. This will automatically hide/unhide all the nested replies. **Note:** Replies nested deeper than the top-level reply cannot be targeted in isolation to be hidden/unhidden.
+Use the `/manage_reply` endpoint to hide or unhide any top-level replies. This automatically hides or unhides all the nested replies.
 
-#### Example request
+**Note:** Replies nested deeper than the top-level reply cannot be targeted in isolation to be hidden or unhidden.
 
-```
+### Example request
+
+```bash
 curl -X POST \
   -F "hide={true | false}" \
   -F "access_token=<ACCESS_TOKEN>" \
 "https://graph.threads.com/v1.0/<THREADS_REPLY_ID>/manage_reply"
 ```
 
-#### Example response
+### Example response
 
-```
+```json
 {
- "success": true
+  "success": true
 }
 ```
 
@@ -29,9 +31,11 @@ curl -X POST \
 
 Use the `reply_control` parameter to specify who can reply to a post being created for publishing. This parameter accepts one of the five options: `everyone`, `accounts_you_follow`, `mentioned_only`, `parent_post_author_only`, and `followers_only`.
 
+### Step 1: Create a Threads media container {#control-who-can-reply-step-1}
+
 #### Example request
 
-```
+```bash
 curl -X POST \
   -F "media_type=<MEDIA_TYPE>" \
   -F "text=<TEXT>" \
@@ -42,21 +46,23 @@ curl -X POST \
 
 #### Example response
 
-```
+```json
 {
- "id": "1234567890"
+  "id": "1234567890"
 }
 ```
 
-Use the `POST /{threads-user-id}/threads_publish` endpoint to publish the media container ID returned in the previous step. Wait about 30 seconds before publishing a Threads media container to give our server enough time to fully process the upload. See the [media container status endpoint](https://developers.facebook.com/documentation/threads/troubleshooting#publishing-does-not-return-a-media-id) for more details.
+### Step 2: Publish the media container {#control-who-can-reply-step-2}
+
+Use the `POST /{threads-user-id}/threads_publish` endpoint to publish the media container ID returned in the previous step. Wait about 30 seconds before publishing a Threads media container to give Threads enough time to fully process the upload. See the [media container status endpoint](https://developers.facebook.com/documentation/threads/troubleshooting#publishing-does-not-return-a-media-id) for more details.
 
 #### Parameters
 
-* `creation_id` —  Identifier of the Threads media container created from the `/threads` endpoint.
+* `creation_id` — Identifier of the Threads media container created from the `/threads` endpoint.
 
 #### Example request
 
-```curl
+```bash
 curl -i -X POST \
 "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads_publish?creation_id=<MEDIA_CONTAINER_ID>&access_token=<ACCESS_TOKEN>"
 ```
@@ -85,10 +91,10 @@ You can enable reply approvals on a post by making a request to the `POST /{thre
 
 ##### Example request
 
-```html
+```bash
 curl -i -X POST \
   -d "media_type=TEXT" \
-  -d "text=<TEXT>" \
+  --data-urlencode "text=<TEXT>" \
   -d "access_token=<ACCESS_TOKEN>" \
   -d "enable_reply_approvals=true" \
 "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads"
@@ -104,19 +110,19 @@ curl -i -X POST \
 
 #### Step 2: Publish the media container
 
-Use the returned Threads media container ID to [publish your Threads post](https://developers.facebook.com/documentation/threads/posts#step-2--publish-a-threads-media-container) with reply approvals enabled.
+Use the returned Threads media container ID to [publish your Threads post](https://developers.facebook.com/documentation/threads/posts#step-2-publish-the-threads-media-container) with reply approvals enabled.
 
 ### Retrieve pending replies
 
 Make a request to the `GET /{threads-media-id}/pending_replies` endpoint to fetch a paginated list of all pending replies.
 
-The default behavior will return all pending and ignored replies. The `approval_status` parameter can be used to filter which replies get returned.
+By default, all pending and ignored replies are returned. The `approval_status` parameter can be used to filter which replies get returned.
 
 #### Parameters
 
 | Name | Description |
 | --- | --- |
-| `reverse`<br><br>Boolean | **Optional.**  <br>**Values:**<br><br>* `true` (*default*) — Replies should be sorted in reverse chronological order.<br>* `false` — Replies should be sorted in chronological order. |
+| `reverse`<br><br>Boolean | **Optional.**  <br>Whether to sort replies in reverse chronological order.  <br>**Values:** `true` *(default)*, `false` |
 | `approval_status`<br><br>string | **Optional.**  <br>**Values:** (*case-sensitive*)<br><br>* `pending` — Show only pending replies.<br>* `ignored` — Show only ignored replies.<br><br>**Note:** The default is to show all replies. |
 
 #### Fields
@@ -129,12 +135,12 @@ All the [existing fields](https://developers.facebook.com/documentation/threads/
 
 ##### Example request
 
-```html
-curl -s -X GET \
+```bash
+curl -s -G \
     -d "fields=id,text,topic_tag,timestamp,media_product_type,media_type,media_url,shortcode,thumbnail_url,children,has_replies,root_post,replied_to,is_reply,hide_status,reply_approval_status" \
     -d "reverse=false" \
-    -d "access_token=<ACCESS_TOKEN>"
-"https://graph.threads.com/v1.0/<MEDIA_ID>/pending_replies"
+    -d "access_token=<ACCESS_TOKEN>" \
+"https://graph.threads.com/v1.0/<THREADS_MEDIA_ID>/pending_replies"
 ```
 
 ##### Example response
@@ -178,13 +184,13 @@ curl -s -X GET \
 
 ### Manage pending replies
 
-Use the `/manage_pending_reply` endpoint to approve/ignore any pending replies.
+Use the `/manage_pending_reply` endpoint to approve or ignore any pending replies.
 
 **Note:** Ignored replies can still be approved.
 
 #### Example request
 
-```html
+```bash
 curl -X POST \
   -F "approve={true|false}" \
   -F "access_token=<ACCESS_TOKEN>" \
@@ -195,6 +201,6 @@ curl -X POST \
 
 ```json
 {
- "success": true
+  "success": true
 }
 ```

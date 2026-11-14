@@ -2,7 +2,7 @@
 
 
 
-You may use the Threads API to enable people to create and publish content on a person's behalf on Threads, and to display those posts within your app solely to the person who created it.
+You can use the Threads API to enable people to create and publish content on a person's behalf on Threads, and to display those posts within your app solely to the person who created it.
 
 **Warning:** The Threads API can be accessed by either `graph.threads.com` or `graph.threads.net`.
 
@@ -25,7 +25,7 @@ Rate limiting may also be subject to total CPU time per day:
 
 ### Posts
 
-Threads profiles are limited to 250 API-published posts within a 24-hour moving period. Carousels count as a single post. The `POST /{threads-user-id}/threads_publish` endpoint enforces this limit when attempting to publish a media container. Enforce the publishing rate limit in your app, especially if it allows app users to schedule posts for future publishing.
+Threads profiles are limited to 250 API-published posts within a rolling 24-hour period. Carousels count as a single post. The `POST /{threads-user-id}/threads_publish` endpoint enforces this limit when attempting to publish a media container. Enforce the publishing rate limit in your app, especially if it allows app users to schedule posts for future publishing.
 
 To check a profile's current Threads API rate limit usage, query the [`GET /{threads-user-id}/threads_publishing_limit` endpoint](https://developers.facebook.com/documentation/threads/reference/user#get-threads-user-idthreads_publishing_limit).
 
@@ -40,14 +40,14 @@ To check a profile's current Threads API rate limit usage, query the [`GET /{thr
 
 #### Example request
 
-```
+```bash
 curl -s -X GET \
   "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads_publishing_limit?fields=quota_usage,config&access_token=<ACCESS_TOKEN>"
 ```
 
 #### Example response
 
-```
+```json
 {
   "data": [
     {
@@ -63,9 +63,9 @@ curl -s -X GET \
 
 ### Replies
 
-Threads profiles are limited to 1,000 replies within a 24-hour moving period.
+Threads profiles are limited to 1,000 replies within a rolling 24-hour period.
 
-To check a profile's current Threads replies rate limit usage, query the [`GET /{threads-user-id}/threads_publishing_limit` endpoint](https://developers.facebook.com/documentation/threads/reference/user#get-threads-user-idthreads_publishing_limit). See the [Reply Management](https://developers.facebook.com/documentation/threads/reply-management) documentation for more information.
+To check a profile's current Threads replies rate limit usage, query the [`GET /{threads-user-id}/threads_publishing_limit` endpoint](https://developers.facebook.com/documentation/threads/reference/user#get-threads-user-idthreads_publishing_limit). See the [Reply management](https://developers.facebook.com/documentation/threads/reply-management) documentation for more information.
 
 **Note:** This endpoint requires the `threads_basic`, `threads_content_publish`, and `threads_manage_replies` permissions.
 
@@ -78,14 +78,14 @@ To check a profile's current Threads replies rate limit usage, query the [`GET /
 
 #### Example request
 
-```
+```bash
 curl -s -X GET \
   "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads_publishing_limit?fields=reply_quota_usage,reply_config&access_token=<ACCESS_TOKEN>"
 ```
 
 #### Example response
 
-```
+```json
 {
   "data": [
     {
@@ -101,9 +101,9 @@ curl -s -X GET \
 
 ### Deletion
 
-Threads profiles are limited to 100 deletions within a 24-hour moving period.
+Threads profiles are limited to 100 deletions within a rolling 24-hour period.
 
-To check a profile's current Threads deletion rate limit usage, query the [`GET /{threads-user-id}/threads_publishing_limit` endpoint](https://developers.facebook.com/documentation/threads/reference/user#get-threads-user-idthreads_publishing_limit). See the [Delete Posts](https://developers.facebook.com/documentation/threads/posts/delete-posts) documentation for more information.
+To check a profile's current Threads deletion rate limit usage, query the [`GET /{threads-user-id}/threads_publishing_limit` endpoint](https://developers.facebook.com/documentation/threads/reference/user#get-threads-user-idthreads_publishing_limit). See the [Delete posts](https://developers.facebook.com/documentation/threads/posts/delete-posts) documentation for more information.
 
 **Note:** This endpoint requires the `threads_basic` and `threads_delete` permissions.
 
@@ -116,14 +116,14 @@ To check a profile's current Threads deletion rate limit usage, query the [`GET 
 
 #### Example request
 
-```
+```bash
 curl -s -X GET \
   "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads_publishing_limit?fields=delete_quota_usage,delete_config&access_token=<ACCESS_TOKEN>"
 ```
 
 #### Example response
 
-```
+```json
 {
   "data": [
     {
@@ -139,9 +139,9 @@ curl -s -X GET \
 
 ### Location search
 
-Threads profiles are limited to 500 location searches within a 24-hour moving period.
+Threads profiles are limited to 500 location searches within a rolling 24-hour period.
 
-To check a profile's current Threads location search rate limit usage, query the [`GET /{threads-user-id}/threads_publishing_limit` endpoint](https://developers.facebook.com/documentation/threads/reference/user#get-threads-user-idthreads_publishing_limit). See the [Location Search](https://developers.facebook.com/documentation/threads/create-posts/location-tagging#search) documentation for more information.
+To check a profile's current Threads location search rate limit usage, query the [`GET /{threads-user-id}/threads_publishing_limit` endpoint](https://developers.facebook.com/documentation/threads/reference/user#get-threads-user-idthreads_publishing_limit). See the [Location search](https://developers.facebook.com/documentation/threads/create-posts/location-tagging#search) documentation for more information.
 
 **Note:** This endpoint requires the `threads_basic` and `threads_location_tagging` permissions.
 
@@ -154,14 +154,14 @@ To check a profile's current Threads location search rate limit usage, query the
 
 #### Example request
 
-```
+```bash
 curl -s -X GET \
   "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads_publishing_limit?fields=location_search_quota_usage,location_search_config&access_token=<ACCESS_TOKEN>"
 ```
 
 #### Example response
 
-```
+```json
 {
   "data": [
     {
@@ -175,7 +175,7 @@ curl -s -X GET \
 }
 ```
 
-## Limitations and Specifications
+## Limitations and specifications
 
 ### Image Specifications
 
@@ -210,4 +210,4 @@ curl -s -X GET \
 
 ## Next steps
 
-* [Get Started with the Threads API](https://developers.facebook.com/documentation/threads/get-started)
+* [Get started with the Threads API](https://developers.facebook.com/documentation/threads/get-started)

@@ -15,45 +15,47 @@ If your app has not been approved for advanced access for the `threads_content_p
 
 ## Publishing
 
-You can repost another post when making a request to the `POST /{threads_id}/repost` endpoint. Make sure to include the Threads post ID with your API request:
+You can repost another post when making a request to the `POST /{threads-media-id}/repost` endpoint. Make sure to include the Threads post ID with your API request:
 
-### Example Request
+### Example request
 
+```bash
+curl -i -X POST \
+  "https://graph.threads.com/v1.0/<THREADS_POST_ID>/repost?access_token=<ACCESS_TOKEN>"
 ```
-curl -i -X POST \  "https://graph.threads.com/v1.0/<THREADS_POST_ID>/repost?access_token=<ACCESS_TOKEN>"
-```
 
-### Example Response
+### Example response
 
-```
+```json
 {
   "id": "1234567" // Threads Repost ID
 }
 ```
 
-The request above reposts an original Threads post. Once done, the reposted post will show up under the **Reposts** tab of the user's Threads profile.
+The request above reposts an original Threads post. Once done, the reposted post appears under the **Reposts** tab of the user's Threads profile.
 
-## Media Retrieval
+## Media retrieval
 
-All reposts will have the media type of `REPOST_FACADE` when retrieved. Make a request to the `GET /threads` endpoint to retrieve the reposts. Make sure to include the following fields with your API request:
+All reposts have the media type of `REPOST_FACADE` when retrieved. Make a request to the `GET /threads` endpoint to retrieve the reposts. Make sure to include the following fields with your API request:
 
-* `media_type` — A field indicating the type of Threads posts.
+* `media_type` — The type of Threads post.
 * `reposted_post` — Media ID of the post that was reposted.
 
-### Example Request
+### Example request
 
-```
-curl -s -X GET \ "https://graph.threads.com/v1.0/<THREADS_MEDIA_ID>?fields=id,media_type,reposted_post&access_token=<ACCESS_TOKEN>"
+```bash
+curl -s -X GET \
+  "https://graph.threads.com/v1.0/<THREADS_MEDIA_ID>?fields=id,media_type,reposted_post&access_token=<ACCESS_TOKEN>"
 ```
 
-### Example Response
+### Example response
 
-```
+```json
 {
-   "id": "12312312312123",
-   "media_type": "REPOST_FACADE",
-   "reposted_post": {
-     "id": "22312312312123"
-   }
+  "id": "12312312312123",
+  "media_type": "REPOST_FACADE",
+  "reposted_post": {
+    "id": "22312312312123"
+  }
 }
 ```

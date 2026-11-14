@@ -12,7 +12,7 @@ You can enable cross-sharing of a Threads post as a Story on your linked Instagr
 
 ## Permissions
 
-Sharing Threads posts to Instagram Stories requires an appropriate [access token](https://developers.facebook.com/documentation/threads/get-started/get-access-tokens-and-permissions) and permissions. While you are testing, you can generate tokens and grant your app permissions by using the [Graph API Explorer](https://developers.facebook.com/documentation/threads/get-started#graph-api-explorer).
+Sharing Threads posts to Instagram Stories requires an appropriate [access token](https://developers.facebook.com/documentation/threads/get-started/get-access-tokens-and-permissions) and permissions. While you are testing, you can generate tokens and grant your app permissions by using the [Graph API Explorer](https://developers.facebook.com/tools/explorer/).
 
 The following permissions are required:
 
@@ -30,8 +30,8 @@ To cross-share a Threads post to Instagram Stories, include either the `crossres
 
 | Name | Description |
 | --- | --- |
-| `crossreshare_to_ig`<br><br>Boolean | Cross-shares a Threads post to a linked Instagram account as a Story when set to `true`.<br><br>**Values:** `true`, `false` (*default*) |
-| `crossreshare_to_ig_dark_mode`<br><br>Boolean | Cross-shares a Threads post to a linked Instagram account as a Story in dark mode when set to `true`.<br><br>**Values:** `true`, `false` (*default*) |
+| `crossreshare_to_ig`<br><br>Boolean | Cross-shares a Threads post to a linked Instagram account as a Story when set to `true`.<br><br>**Values:** `true`, `false` *(default)* |
+| `crossreshare_to_ig_dark_mode`<br><br>Boolean | Cross-shares a Threads post to a linked Instagram account as a Story in dark mode when set to `true`.<br><br>**Values:** `true`, `false` *(default)* |
 
 ### Response fields
 
@@ -39,27 +39,52 @@ When you enable cross-sharing, the publish response includes the `crossreshare_t
 
 | Name | Description |
 | --- | --- |
-| `id`<br><br>string | The ID of the published Threads media. |
-| `crossreshare_to_ig_status`<br><br>string | The status of the cross-share to Instagram Stories.<br>**Values:** `SUCCESS`, `FAILED` |
+| `id`<br><br>numeric string | The ID of the published Threads media. |
+| `crossreshare_to_ig_status`<br><br>string | The status of the cross-share to Instagram Stories.  <br>**Values:** `SUCCESS`, `FAILED` |
 
 **Note:** The Threads post is published even if the cross-share to Instagram fails. Check the `crossreshare_to_ig_status` field to confirm whether the Story was created successfully.
 
-### Example request
+### Step 1: Create a Threads media container
+
+Include the `crossreshare_to_ig` parameter when you create the media container.
+
+#### Example request
 
 ```bash
 curl -X POST \
-  -d "media_type=text" \
-  -d "text=<POST_TEXT>" \
-  -d "crossreshare_to_ig=true" | "crossreshare_to_ig_dark_mode=true" \
-  -d "access_token=<ACCESS_TOKEN>"
+  -d "media_type=TEXT" \
+  --data-urlencode "text=<POST_TEXT>" \
+  -d "crossreshare_to_ig=true" \
+  -d "access_token=<ACCESS_TOKEN>" \
 "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads"
 ```
 
-### Example response
+#### Example response
 
 ```json
 {
-  "id": "<MEDIA_CONTAINER_ID>",
-  "crossreshare_to_ig_status": "SUCCESS" | "FAILED"
+  "id": "<MEDIA_CONTAINER_ID>"
+}
+```
+
+### Step 2: Publish the media container
+
+Use the `POST /{threads-user-id}/threads_publish` endpoint to publish the media container. The response includes the `crossreshare_to_ig_status` field.
+
+#### Example request
+
+```bash
+curl -X POST \
+  -d "creation_id=<MEDIA_CONTAINER_ID>" \
+  -d "access_token=<ACCESS_TOKEN>" \
+"https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads_publish"
+```
+
+#### Example response
+
+```json
+{
+  "id": "<THREADS_MEDIA_ID>",
+  "crossreshare_to_ig_status": "SUCCESS"
 }
 ```

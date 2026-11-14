@@ -1,4 +1,4 @@
-# Polls - Threads API
+# Threads poll attachments
 
 
 
@@ -21,11 +21,11 @@ If your app has not been approved for advanced access for the `threads_content_p
 
 You can attach a poll when making a request to the `POST /threads` endpoint to create a media object. Include the following parameter in your request:
 
-* `poll_attachment` – A JSON object containing the options for the poll.
+* `poll_attachment` — A JSON object containing the options for the poll.
 
 The `poll_attachment` object must be of the form:
 
-```
+```json
 {
   "option_a": "first option",
   "option_b": "second option",
@@ -38,7 +38,7 @@ The `poll_attachment` object must contain at least 2 options and no more than 4 
 
 ### Example request
 
-```
+```bash
 curl -i -X POST \
 "https://graph.threads.com/v1.0/<THREADS_USER_ID>/threads?media_type=TEXT&text=MyText&access_token=<ACCESS_TOKEN>" \
 -d poll_attachment='{"option_a":"first option", "option_b":"second option"}'
@@ -46,31 +46,31 @@ curl -i -X POST \
 
 ### Example response
 
-```
+```json
 {
   "id": "1234567" // Threads Media Container ID
 }
 ```
 
-The request above creates a Threads post container. After you [publish](https://developers.facebook.com/documentation/threads/posts#step-2--publish-a-threads-media-container) it, the post contains a poll attachment with the provided options.
+The request above creates a Threads media container. After you [publish](https://developers.facebook.com/documentation/threads/posts#step-2-publish-the-threads-media-container) it, the post contains a poll attachment with the provided options.
 
 ## Media retrieval
 
 Make a request to the `GET /threads` or `GET /{threads-media-id}` endpoint to retrieve media objects. Make sure to include the following field with your API request:
 
-* `poll_attachment` – The poll attachment for the post.
+* `poll_attachment` — The poll attachment for the post.
 
 ### Example request
 
-```
-curl -i -X GET \
-"https://graph.threads.com/v1.0/<THREADS_MEDIA_ID>&access_token=<ACCESS_TOKEN>" \
--d fields=id,poll_attachment{option_a,option_b,option_c,option_d,option_a_votes_percentage,option_b_votes_percentage,option_c_votes_percentage,option_d_votes_percentage,total_votes,expiration_timestamp}
+```bash
+curl -i -G \
+"https://graph.threads.com/v1.0/<THREADS_MEDIA_ID>?access_token=<ACCESS_TOKEN>" \
+-d "fields=id,poll_attachment{option_a,option_b,option_c,option_d,option_a_votes_percentage,option_b_votes_percentage,option_c_votes_percentage,option_d_votes_percentage,total_votes,expiration_timestamp}"
 ```
 
 ### Example response
 
-```
+```json
 {
   "id": "1234567", // Threads Media ID
   "poll_attachment": {

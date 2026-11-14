@@ -1,4 +1,4 @@
-# Delete Posts
+# Delete posts
 
 
 
@@ -10,28 +10,28 @@ You can delete a Threads post that was created by the authenticated user by maki
 
 ### Permissions
 
-The Threads Delete API requires an appropriate access token and permissions based on the node you are targeting. While you are testing, you can easily generate tokens and grant your app permissions by using the Graph API Explorer.
+Deleting posts requires an appropriate access token and permissions based on the endpoint you are calling. While you are testing, you can generate tokens and grant your app permissions by using the Graph API Explorer.
 
-- `threads_basic` — Required for making any calls to all Threads API endpoints.
-- `threads_delete` — Required for making any delete calls.
+* `threads_basic` — Required for making any calls to all Threads API endpoints.
+* `threads_delete` — Required for making any delete calls.
 
 ### Limitations
 
 * The Delete endpoint has a rate limit of 100 deletes per day per account.
 
-### Example Request
+### Example request
 
-```html
+```bash
 curl -i -X DELETE \
   "https://graph.threads.com/v1.0/<THREADS_MEDIA_ID>?access_token=<ACCESS_TOKEN>"
 ```
 
-### Example Response
+### Example response
 
-```html
+```json
 {
   "success": true,
-  "deleted_id": "1234567",
+  "deleted_id": "1234567"
 }
 ```
 
